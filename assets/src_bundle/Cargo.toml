@@ -26,8 +26,8 @@ rodio = { version = "0.19", features = ["symphonia-all"] }
 # Audio Metadata: lofty for ID3 tags, artist, album, duration, and embedded cover art
 lofty = "0.19"
 
-# Mobile Native File Dialogs (supports Android Storage Access Framework)
-rfd = { version = "0.15", default-features = false, features = ["xdg-portal"] }
+# Native file dialogs; Linux uses the desktop portal backend.
+rfd = { version = "0.15", default-features = false }
 
 # Lock-free concurrency channels between UI and background Audio thread
 crossbeam-channel = "0.5"
@@ -47,6 +47,9 @@ android-activity = { version = "0.6", features = ["native-activity"] }
 android_logger = "0.14"
 log = "0.4"
 jni = "0.21"
+
+[target.'cfg(target_os = "linux")'.dependencies]
+rfd = { version = "0.15", default-features = false, features = ["xdg-portal", "tokio"] }
 
 [profile.release]
 opt-level = 3
