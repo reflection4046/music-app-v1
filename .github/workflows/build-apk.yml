@@ -11,6 +11,19 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: aarch64-linux-android, armv7-linux-androideabi
+
+      - name: Install cargo-ndk
+        run: cargo install cargo-ndk
+
+      - name: Set up Android NDK
+        uses: nttld/setup-ndk@v1
+        with:
+          ndk-version: r25c
+
       - name: Compile Rust Shared Library with cargo-ndk
         run: |
           # Auto-locate directory containing Cargo.toml
@@ -33,18 +46,21 @@ jobs:
           distribution: 'zulu'
           java-version: '17'
 
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.7'
+
       - name: Build APK with Gradle
         run: |
           CARGO_PATH=$(find . -maxdepth 3 -name "Cargo.toml" | head -n 1)
-          PROJECT_DIR=$(dirname "$CARGO_PATH")
-          cd "$PROJECT_DIR/android" || cd android
-
-          if [ -f "./gradlew" ]; then
-            chmod +x ./gradlew
-            ./gradlew assembleRelease
-          else
-            gradle assembleRelease
+          if [ -z "$CARGO_PATH" ]; then
+            echo "ERROR: Cargo.toml not found."
+            exit 1
           fi
+          PROJECT_DIR=$(dirname "$CARGO_PATH")
+          cd "$PROJECT_DIR/android"
+          gradle --no-daemon assembleRelease
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
