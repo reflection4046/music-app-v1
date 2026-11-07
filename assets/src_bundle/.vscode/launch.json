@@ -1,0 +1,22 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "lldb",
+      "request": "launch",
+      "name": "Debug Rust Music Player (Desktop)",
+      "cargo": {
+        "args": [
+          "build",
+          "--bin=rust_mobile_music_player"
+        ],
+        "filter": {
+          "name": "rust_mobile_music_player",
+          "kind": "bin"
+        }
+      },
+      "args": [],
+      "cwd": "${workspaceFolder}"
+    }
+  ]
+}

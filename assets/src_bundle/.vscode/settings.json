@@ -1,0 +1,10 @@
+{
+  "rust-analyzer.check.command": "check",
+  "rust-analyzer.cargo.allFeatures": true,
+  "files.watcherExclude": {
+    "**/target/**": true,
+    "**/android/.gradle/**": true,
+    "**/android/app/build/**": true
+  },
+  "editor.formatOnSave": true
+}

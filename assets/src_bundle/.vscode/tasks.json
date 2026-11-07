@@ -1,0 +1,36 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Cargo: Run Desktop (Simulator)",
+      "type": "shell",
+      "command": "cargo run",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": ["$rustc"]
+    },
+    {
+      "label": "Cargo: Build Android NDK (.so)",
+      "type": "shell",
+      "command": "cargo ndk -t aarch64-linux-android -o ./android/app/src/main/jniLibs build --release",
+      "group": "build",
+      "problemMatcher": ["$rustc"]
+    },
+    {
+      "label": "Gradle: Assemble APK",
+      "type": "shell",
+      "command": "cd android && ./gradlew assembleDebug",
+      "dependsOn": "Cargo: Build Android NDK (.so)",
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "label": "Cargo: Check Code",
+      "type": "shell",
+      "command": "cargo check",
+      "problemMatcher": ["$rustc"]
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "name": "Rust Mobile Music Player",
+  "version": "1.0.0",
+  "runtime": "egui/eframe (android-activity) + rodio 0.19",
+  "features": [
+    "Crossbeam Concurrency",
+    "Lofty Metadata Extraction",
+    "64-band FFT Spectrum Analyzer",
+    "Background Audio Foreground Service"
+  ]
+}
