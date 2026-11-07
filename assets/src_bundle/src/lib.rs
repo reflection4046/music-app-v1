@@ -7,15 +7,14 @@ pub mod playlist;
 pub mod ui;
 
 use audio::{spawn_audio_thread, AudioCommand, AudioEvent};
-use ui::MusicPlayerApp;
-
 #[cfg(target_os = "android")]
 use android_activity::AndroidApp;
+use ui::MusicPlayerApp;
 
 /// Android Entry Point invoked by the Android NDK NativeActivity runtime.
 #[cfg(target_os = "android")]
 #[no_mangle]
-fn android_main(app: AndroidApp) {
+fn android_main(_app: AndroidApp) {
     android_logger::init_once(
         android_logger::Config::default()
             .with_max_level(log::LevelFilter::Info)
@@ -29,8 +28,7 @@ fn android_main(app: AndroidApp) {
     // Spawn dedicated background audio playback thread
     spawn_audio_thread(cmd_receiver, event_sender);
 
-    let mut options = eframe::NativeOptions::default();
-    options.android_app = Some(app);
+    let options = eframe::NativeOptions::default();
 
     let _ = eframe::run_native(
         "Rust Mobile Music Player",

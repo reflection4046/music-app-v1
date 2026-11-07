@@ -196,7 +196,7 @@ impl eframe::App for MusicPlayerApp {
         egui::TopBottomPanel::bottom("mobile_bottom_bar")
             .frame(egui::Frame::none().fill(Color32::from_rgb(18, 20, 26)).inner_margin(Margin::same(8.0)))
             .show(ctx, |ui| {
-                if let Some(track) = self.playlist.current_track() {
+                if let Some(track) = self.playlist.current_track().cloned() {
                     egui::Frame::none()
                         .fill(Color32::from_rgb(28, 33, 44))
                         .rounding(12.0)
