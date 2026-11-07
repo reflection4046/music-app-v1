@@ -1,0 +1,52 @@
+name: Build Android APK
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+  workflow_dispatch:
+
+jobs:
+  build-apk:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Install Rust Toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: aarch64-linux-android, armv7-linux-androideabi
+
+      - name: Install cargo-ndk
+        run: cargo install cargo-ndk
+
+      - name: Set up Android NDK
+        uses: nttld/setup-ndk@v1
+        with:
+          ndk-version: r25c
+
+      - name: Compile Rust Shared Library with cargo-ndk
+        run: |
+          cargo ndk -t aarch64-linux-android -o ./android/app/src/main/jniLibs build --release
+          cargo ndk -t armv7-linux-androideabi -o ./android/app/src/main/jniLibs build --release
+
+      - name: Set up Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      - name: Build APK with Gradle
+        run: |
+          cd android
+          chmod +x gradlew || true
+          gradle assembleRelease
+
+      - name: Upload APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: rust-mobile-music-player-apk
+          path: android/app/build/outputs/apk/release/*.apk
