@@ -205,8 +205,8 @@ impl eframe::App for MusicPlayerApp {
                             ui.horizontal(|ui| {
                                 let label_resp = ui.allocate_ui(Vec2::new(ui.available_width() - 90.0, 36.0), |ui| {
                                     ui.vertical(|ui| {
-                                        ui.label(egui::RichText::new(&track.title).strong().color(Color32::WHITE).truncate());
-                                        ui.label(egui::RichText::new(&track.artist).size(11.0).color(Color32::from_rgb(148, 163, 184)).truncate());
+                                        ui.label(egui::RichText::new(&track.title).strong().color(Color32::WHITE));
+                                        ui.label(egui::RichText::new(&track.artist).size(11.0).color(Color32::from_rgb(148, 163, 184)));
                                     });
                                 });
 
@@ -278,8 +278,8 @@ impl eframe::App for MusicPlayerApp {
 
                                     ui.vertical(|ui| {
                                         let text_color = if is_active { Color32::from_rgb(56, 189, 248) } else { Color32::WHITE };
-                                        ui.label(egui::RichText::new(&track.title).strong().color(text_color).truncate());
-                                        ui.label(egui::RichText::new(&track.artist).size(12.0).color(Color32::from_rgb(148, 163, 184)).truncate());
+                                        ui.label(egui::RichText::new(&track.title).strong().color(text_color));
+                                        ui.label(egui::RichText::new(&track.artist).size(12.0).color(Color32::from_rgb(148, 163, 184)));
                                     });
 
                                     ui.with_layout(egui::Layout::right_to_left(egui::Align::Center), |ui| {

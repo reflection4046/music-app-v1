@@ -3,7 +3,7 @@
 //! manages playback state, volume, seeking, and emits periodic 50ms progress updates.
 
 use crossbeam_channel::{Receiver, Sender};
-use rodio::{Decoder, OutputStream, OutputStreamHandle, Sink};
+use rodio::{Decoder, OutputStream, OutputStreamHandle, Sink, Source};
 use std::fs::File;
 use std::io::BufReader;
 use std::path::PathBuf;

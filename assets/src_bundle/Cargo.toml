@@ -18,6 +18,7 @@ eframe = { version = "0.29", default-features = false, features = [
     "default_fonts",
     "glow",              # OpenGL ES 2.0/3.0 backend for Android/iOS
     "persistence",
+    "android-native-activity",
 ] }
 
 # Audio Playback Engine: rodio with symphonia decoders (MP3, WAV, FLAC, OGG, AAC)
