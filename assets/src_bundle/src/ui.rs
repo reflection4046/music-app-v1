@@ -134,6 +134,7 @@ impl MusicPlayerApp {
         }
     }
 
+    #[cfg(not(target_os = "android"))]
     fn pick_audio_files(&mut self) {
         if let Some(paths) = rfd::FileDialog::new()
             .set_title("Select Audio Files")
@@ -148,6 +149,7 @@ impl MusicPlayerApp {
         }
     }
 
+    #[cfg(not(target_os = "android"))]
     fn pick_audio_folder(&mut self) {
         if let Some(dir) = rfd::FileDialog::new()
             .set_title("Select Music Folder")
@@ -157,6 +159,12 @@ impl MusicPlayerApp {
             self.playlist.add_tracks(tracks);
         }
     }
+
+    #[cfg(target_os = "android")]
+    fn pick_audio_files(&mut self) {}
+
+    #[cfg(target_os = "android")]
+    fn pick_audio_folder(&mut self) {}
 }
 
 impl eframe::App for MusicPlayerApp {
